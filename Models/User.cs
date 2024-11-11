@@ -9,4 +9,7 @@ public class User{
 
     [Required(ErrorMessage = "Password is required.")]
     public string Password { get; set; } = string.Empty;
+
+    //Navigation proprety for the pets of the owner
+    public List<Pet> Pets { get; set; } = new List<Pet>();
 }

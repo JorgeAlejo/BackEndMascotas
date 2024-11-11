@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Pet{
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -19,6 +20,15 @@ public class Pet{
 
     public bool IsActive { get; set; } = true;
 
+    //foreign key of the owner
+    [Required]
+    public Guid UserId { get; set; }
+
+    //Navigation proprety for the user
+    [ForeignKey("UserId")]
+    public User user {get; set; } = null!;
+
+    //Validation of the date of birth
     public static ValidationResult? ValidateBirthDate(DateTime birthDate, ValidationContext context){
         if (birthDate > DateTime.Today) return new ValidationResult("La fecha de nacimiento no puede ser en el futuro.");
         return ValidationResult.Success;

@@ -1,14 +1,22 @@
-// TODO: Implementar un servicio de token seguro como JWT
-public class AuthService{
-    private readonly List<User> _users = new List<User>();
+using Microsoft.EntityFrameworkCore;
 
-    public bool Register(User user){
-        if(_users.Any(u => u.Email == user.Email)) return false;
-        _users.Add(user);
+public class AuthService{
+    private readonly VetDbContext _context;
+
+    public AuthService(VetDbContext context){
+        _context = context;
+    }
+
+    public async Task<bool> Register(User user){
+        if(await _context.Users.AnyAsync(u => u.Email == user.Email)) return false;
+
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
         return true;
     }
 
-    public User? Login(string email, string password){
-        return _users.FirstOrDefault(u => u.Email == email && u.Password == password);
+    public async Task<User?> Login(string email, string password){
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
     }
 }
