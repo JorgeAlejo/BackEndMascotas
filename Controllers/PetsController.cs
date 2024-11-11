@@ -1,4 +1,3 @@
-// TODO: Implementar con la BD
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
