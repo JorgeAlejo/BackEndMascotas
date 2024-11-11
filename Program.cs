@@ -1,9 +1,10 @@
 using Microsoft.OpenApi.Models;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vet API", Version = "v1" });
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen(c => {
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<AuthService>();
+builder.Services.AddSingleton<PetService>();
 
 var app = builder.Build();
 
