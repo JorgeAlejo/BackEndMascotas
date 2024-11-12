@@ -15,8 +15,8 @@ builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vet API", Version = "v1" });
 });
 builder.Services.AddControllers();
-builder.Services.AddSingleton<AuthService>();
-builder.Services.AddSingleton<PetService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<PetService>();
 
 var app = builder.Build();
 

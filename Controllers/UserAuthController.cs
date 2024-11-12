@@ -12,9 +12,9 @@ public class UserAuthController : ControllerBase{
     }
 
     [HttpPost("register")]
-    public IActionResult Register([FromBody] User user){
+    public async Task<IActionResult> Register([FromBody] User user){
         if (!ModelState.IsValid) return BadRequest(ModelState);
-        if (!_authService.Register(user)) return Conflict("A user with the same email already exists.");
+        if (!await _authService.Register(user)) return Conflict("A user with the same email already exists.");
         return Ok(new { Message = "User registered successfully." });
     }
 

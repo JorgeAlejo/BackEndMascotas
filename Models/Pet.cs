@@ -16,7 +16,7 @@ public class Pet{
     [Required(ErrorMessage = "Se requiere una fecha de nacimiento.")]
     [DataType(DataType.Date)]
     [CustomValidation(typeof(Pet), nameof(ValidateBirthDate))]
-    public DateTime BirthDate { get; set; }
+    public DateTime BirthDate { get; set; } = DateTime.UtcNow;
 
     public bool IsActive { get; set; } = true;
 
