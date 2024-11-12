@@ -10,6 +10,10 @@ public class PetService{
     public IEnumerable<Pet> GetAll() => _context.Pets.Where(p => p.IsActive).ToList();
     //Get a pet by ID
     public Pet? GetById(Guid id) => _context.Pets.FirstOrDefault(p => p.Id == id && p.IsActive);
+    //Get all pets from user
+    public IEnumerable<Pet> GetByUserId(Guid userId){
+        return _context.Pets.Where(p => p.UserId == userId && p.IsActive).ToList();
+    }
     //Register a new Pet
     public void Create(Pet pet){
         _context.Pets.Add(pet);

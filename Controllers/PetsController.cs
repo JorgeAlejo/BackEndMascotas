@@ -20,6 +20,13 @@ public class PetsController : ControllerBase{
         return Ok(pet);
     }
 
+    [HttpGet("User/{userId}")]
+    public IActionResult GetAllByUserId(Guid userId){
+        var pets = _petService.GetByUserId(userId);
+        if (!pets.Any()) return NotFound($"No se encontraron mascotas activas para el usuario: {userId}");
+        return Ok(pets);
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] Pet pet){
         if (!ModelState.IsValid) return BadRequest(ModelState);

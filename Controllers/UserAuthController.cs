@@ -11,15 +11,15 @@ public class UserAuthController : ControllerBase{
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] User user){
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        if (!await _authService.Register(user)) return Conflict("A user with the same email already exists.");
-        return Ok(new { Message = "User registered successfully." });
+        var result = await _authService.Register(user);
+        if(!result) return BadRequest("El correo ya esta en uso.");
+        return Ok("Registro exitoso.");
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] User user){
-        var loggedInUser = _authService.Login(user.Email, user.Password);
-        if (loggedInUser == null) return Unauthorized("Invalid email or password.");
-        return Ok(new { Message = "Login Successful.", UserId = loggedInUser.Id });
+    public async Task<IActionResult> Login([FromBody] User user){
+        var login = await _authService.Login(user.Email, user.Password);
+        if (login == null) return Unauthorized("Correo o contraseña incorrectos.");
+        return Ok("Inicio de sesion exitoso.");
     }
 }
