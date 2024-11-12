@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 public class User{
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -11,5 +12,6 @@ public class User{
     public string Password { get; set; } = string.Empty;
 
     //Navigation proprety for the pets of the owner
+    [JsonIgnore]
     public List<Pet> Pets { get; set; } = new List<Pet>();
 }

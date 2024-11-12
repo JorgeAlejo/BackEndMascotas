@@ -1,5 +1,3 @@
-//TODO: Set with the DB
-
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]

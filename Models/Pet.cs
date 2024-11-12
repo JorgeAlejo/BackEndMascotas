@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 public class Pet{
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -16,7 +17,8 @@ public class Pet{
     [Required(ErrorMessage = "Se requiere una fecha de nacimiento.")]
     [DataType(DataType.Date)]
     [CustomValidation(typeof(Pet), nameof(ValidateBirthDate))]
-    public DateTime BirthDate { get; set; } = DateTime.UtcNow;
+    [Column(TypeName = "date")]
+    public DateTime BirthDate { get; set; }
 
     public bool IsActive { get; set; } = true;
 
@@ -26,7 +28,8 @@ public class Pet{
 
     //Navigation proprety for the user
     [ForeignKey("UserId")]
-    public User user {get; set; } = null!;
+    [JsonIgnore]
+    public User? user {get; set; }
 
     //Validation of the date of birth
     public static ValidationResult? ValidateBirthDate(DateTime birthDate, ValidationContext context){
