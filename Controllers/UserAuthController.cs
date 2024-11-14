@@ -8,6 +8,11 @@ public class UserAuthController : ControllerBase{
     public UserAuthController(AuthService authService){
         _authService = authService;
     }
+    [HttpGet]
+    public async Task<IActionResult> GetAllUsers(){
+        var users = await _authService.GetAllUsers();
+        return Ok(users);
+    }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] User user){
@@ -20,6 +25,6 @@ public class UserAuthController : ControllerBase{
     public async Task<IActionResult> Login([FromBody] User user){
         var login = await _authService.Login(user.Email, user.Password);
         if (login == null) return Unauthorized("Correo o contraseña incorrectos.");
-        return Ok("Inicio de sesion exitoso.");
+        return Ok(login.Id);
     }
 }

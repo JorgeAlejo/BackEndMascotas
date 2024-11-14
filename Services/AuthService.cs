@@ -7,6 +7,11 @@ public class AuthService{
         _context = context;
     }
 
+    //Get All users
+    public async Task<List<User>> GetAllUsers(){
+        return await _context.Users.ToListAsync();
+    }
+
     public async Task<bool> Register(User user){
         if(await _context.Users.AnyAsync(u => u.Email == user.Email)) return false;
         //password Hashing

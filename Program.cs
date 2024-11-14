@@ -5,7 +5,12 @@ using Microsoft.EntityFrameworkCore;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+var connectionString = $"Host=host.docker.internal;"+
+                       $"Port={Environment.GetEnvironmentVariable("DB_PORT")};"+
+                       $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+                       $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+                       $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 
 // Add services to the container.
 builder.Services.AddDbContext<VetDbContext>(options => 
