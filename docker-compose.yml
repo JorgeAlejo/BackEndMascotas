@@ -29,6 +29,16 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  frontend:
+    build: 
+      context: ../AS 
+      dockerfile: ../AS/Dockerfile
+    container_name: pets-frontend
+    ports:
+      - "3000:3000" # Cambia el puerto según tu configuración de frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080 # O la URL correspondiente a tu API 
+
 volumes:
   postgres-data:
     driver: local

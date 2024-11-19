@@ -16,12 +16,20 @@ var connectionString = $"Host=host.docker.internal;"+
 builder.Services.AddDbContext<VetDbContext>(options => 
     options.UseNpgsql(connectionString));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c => 
+{
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vet API", Version = "v1" });
 });
 builder.Services.AddControllers();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<PetService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:3000")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -29,7 +37,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => {
+    app.UseSwaggerUI(c => 
+    {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vet API v1");
         c.RoutePrefix = string.Empty; // Esto hace que Swagger esté en la ruta principal 
     });
