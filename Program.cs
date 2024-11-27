@@ -23,12 +23,13 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<PetService>();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:3000")
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+builder.Services.AddCors(options =>{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Origen permitido
+              .AllowAnyMethod()                    // Métodos HTTP permitidos
+              .AllowAnyHeader();                   // Encabezados permitidos
+    });
 });
 
 var app = builder.Build();
@@ -43,6 +44,9 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Esto hace que Swagger esté en la ruta principal 
     });
 }
+
+// Usa CORS
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
