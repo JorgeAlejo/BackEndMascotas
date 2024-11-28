@@ -4,6 +4,15 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
+# Copiar el script
+COPY entrypoint.sh /app/entrypoint.sh
+
+# Dar permisos de ejecución al script
+RUN chmod +x /app/entrypoint.sh
+
+# Cambiar el comando de inicio para usar el script
+ENTRYPOINT ["/app/entrypoint.sh"]
+
 #compile and publish
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ENV ASPNETCORE_ENVIRONMENT=Development
