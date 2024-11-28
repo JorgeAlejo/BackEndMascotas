@@ -10,9 +10,6 @@ COPY entrypoint.sh /app/entrypoint.sh
 # Dar permisos de ejecución al script
 RUN chmod +x /app/entrypoint.sh
 
-# Cambiar el comando de inicio para usar el script
-ENTRYPOINT ["/app/entrypoint.sh"]
-
 #compile and publish
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ENV ASPNETCORE_ENVIRONMENT=Development
@@ -33,4 +30,6 @@ RUN dotnet publish "BackEndMascotas.csproj" -c $BUILD_CONFIGURATION -o /app/publ
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT [ "dotnet", "BackEndMascotas.dll", "--environment=Development"]
+# Cambiar el comando de inicio para usar el script
+ENTRYPOINT ["/app/entrypoint.sh"]
+#ENTRYPOINT [ "dotnet", "BackEndMascotas.dll", "--environment=Development"]
