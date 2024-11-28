@@ -31,5 +31,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # Cambiar el comando de inicio para usar el script
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh", "--environment=Development"]
 #ENTRYPOINT [ "dotnet", "BackEndMascotas.dll", "--environment=Development"]
