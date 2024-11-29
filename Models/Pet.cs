@@ -17,7 +17,6 @@ public class Pet{
     public string Gender { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Se requiere una fecha de nacimiento.")]
-    [JsonConverter(typeof(JsonDateConverter))]
     [DataType(DataType.Date)]
     [CustomValidation(typeof(Pet), nameof(ValidateBirthDate))]
     [Column(TypeName = "date")]
