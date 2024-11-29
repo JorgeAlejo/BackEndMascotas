@@ -5,10 +5,6 @@ EXPOSE 8080
 EXPOSE 8081
 
 # Copiar el script
-#COPY entrypoint.sh /app/
-
-# Dar permisos de ejecución al script
-#RUN chmod +x /app/entrypoint.sh
 
 #compile and publish
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -31,7 +27,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Cambiar el comando de inicio para usar el script
-#ENTRYPOINT ["/app/entrypoint.sh", "--environment=Development"]
 ENTRYPOINT [ "dotnet", "BackEndMascotas.dll", "--environment=Development"]
-#ENTRYPOINT ["dotnet", "ef", "database", "update"]
